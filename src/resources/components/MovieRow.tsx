@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Play, Plus, ThumbsUp } from 'lucide-react';
-import { getMoviesByCategory, getImageUrl, Movie } from '../../services/tmdb';
+import { getMoviesByCategory, getImageUrl, type Movie } from '../../services/tmdb';
 import { motion } from 'framer-motion';
 
 interface MovieRowProps {
