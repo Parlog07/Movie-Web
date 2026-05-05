@@ -1,73 +1,54 @@
-# React + TypeScript + Vite
+# PARLOG VIEW - Premium Movie Streaming
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A complete, production-ready movie streaming website featuring a premium dark interface with purple accents, inspired by Netflix, EgyBest, and FlixMomo. 
 
-Currently, two official plugins are available:
+Built with **React 18**, **TypeScript**, **Tailwind CSS**, and the **TMDB API**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
+- **Premium Dark Design**: Deep black `#0a0a0a` background with `#8B5CF6` purple accents.
+- **Dynamic Content**: Fetches real movies from the TMDB API using `TanStack Query` for caching.
+- **Search & Filtering**: Real-time debounced search.
+- **My List**: LocalStorage-based watchlist functionality.
+- **Detailed Pages**: Full backdrop images, custom video player skeleton, and similar movie suggestions.
+- **Responsive**: Fully responsive design for mobile, tablet, and desktop.
 
-## React Compiler
+## Free TMDB API Setup Instructions
+To get real data flowing into the app, you need a free TMDB API Key.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. Go to [The Movie Database (TMDB)](https://www.themoviedb.org/) and create a free account.
+2. Navigate to **Settings** -> **API** from the left sidebar.
+3. Click on **Create** or **Request an API Key** (choose Developer).
+4. Fill out the form, and you will instantly receive your `v3 auth` API Key.
+5. Create a `.env` file in the root of this project and add:
+   ```env
+   VITE_TMDB_API_KEY=your_api_key_here
+   ```
+6. Restart the Vite development server.
 
-## Expanding the ESLint configuration
+## Installation & Running Locally
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+2. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+3. Open `http://localhost:5173` in your browser.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Tech Stack & Architecture
+- **React 18** with **TypeScript**
+- **Vite** for fast building
+- **Tailwind CSS** for styling and animations
+- **Framer Motion** for UI micro-animations
+- **React Query** for server state management
+- **React Router v6** for navigation
+- **Laravel-inspired Structure**: `src/app`, `src/config`, `src/resources`, `src/routes`, `src/services`, `src/utils`
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Performance & Rate Limiting
+- **Caching**: API responses are cached via TanStack Query to reduce network requests.
+- **Debouncing**: Search inputs are debounced by 500ms to avoid hitting TMDB's 50 requests/sec limit.
+- **Lazy Loading**: Images use optimized loading (if expanded with `framer-motion`).
