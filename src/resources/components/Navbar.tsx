@@ -43,9 +43,9 @@ const Navbar = () => {
       </div>
 
       <div className="flex items-center gap-4 text-white">
-        <button className="hover:text-primary transition-colors">
+        <Link to="/search" className="hover:text-primary transition-colors">
           <Search size={20} />
-        </button>
+        </Link>
         <button className="hover:text-primary transition-colors">
           <Bell size={20} />
         </button>

@@ -47,6 +47,8 @@ export interface Movie {
   vote_average: number;
   release_date: string;
   genre_ids: number[];
+  runtime?: number;
+  genres?: { id: number; name: string }[];
 }
 
 export interface PaginatedResponse<T> {
@@ -72,6 +74,13 @@ export const searchMovies = async (query: string): Promise<Movie[]> => {
     params: { query },
   });
   return data.results;
+};
+
+export const getMovieDetails = async (id: string): Promise<any> => {
+  const { data } = await tmdbApi.get<any>(`/movie/${id}`, {
+    params: { append_to_response: 'credits,similar' }
+  });
+  return data;
 };
 
 export const getImageUrl = (path: string | null, size: 'w500' | 'original' = 'original') => {

@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Play, Plus, ThumbsUp } from 'lucide-react';
 import { getMoviesByCategory, getImageUrl, Movie } from '../../services/tmdb';
 import { motion } from 'framer-motion';
@@ -74,10 +75,11 @@ const MovieRow = ({ title, endpoint }: MovieRowProps) => {
 const MovieCard = ({ movie }: { movie: Movie }) => {
   return (
     <motion.div 
-      className="relative min-w-[200px] h-[300px] rounded-xl overflow-hidden cursor-pointer group flex-shrink-0"
+      className="relative min-w-[200px] h-[300px] rounded-xl overflow-hidden cursor-pointer group flex-shrink-0 block"
       whileHover={{ scale: 1.05 }}
       transition={{ duration: 0.2 }}
     >
+      <Link to={`/movie/${movie.id}`} className="absolute inset-0 z-10" />
       <img 
         src={getImageUrl(movie.poster_path, 'w500')} 
         alt={movie.title}

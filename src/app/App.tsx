@@ -1,8 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
 import Navbar from '../resources/components/Navbar';
 import Home from '../resources/views/Home';
-// import Detail from '../resources/views/Detail';
-// import Search from '../resources/views/Search';
+import Detail from '../resources/views/Detail';
+import Search from '../resources/views/Search';
 
 function App() {
   return (
@@ -11,8 +11,8 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
-          {/* <Route path="/movie/:id" element={<Detail />} /> */}
-          {/* <Route path="/search" element={<Search />} /> */}
+          <Route path="/movie/:id" element={<Detail />} />
+          <Route path="/search" element={<Search />} />
         </Routes>
       </main>
     </div>
