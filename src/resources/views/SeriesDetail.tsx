@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { Play, Plus, Check, Share2, Star, Download, ChevronDown } from 'lucide-react';
+import { Play, Plus, Check, ChevronDown } from 'lucide-react';
 import { getTvShowDetails, getSeasonEpisodes, getImageUrl } from '../../services/tmdb';
 import { useWatchlist } from '../../utils/useWatchlist';
 import { useState, useEffect } from 'react';
@@ -19,7 +19,6 @@ const SeriesDetail = () => {
   const { id } = useParams<{ id: string }>();
   const [isPlaying, setIsPlaying] = useState(false);
   const [activeServer, setActiveServer] = useState(SERVERS[0]);
-  const [userRating, setUserRating] = useState(0);
   
   const [selectedSeason, setSelectedSeason] = useState(1);
   const [selectedEpisode, setSelectedEpisode] = useState(1);
