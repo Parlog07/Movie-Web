@@ -1,7 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Play, Plus, Check, ChevronDown } from 'lucide-react';
-import { getTvShowDetails, getSeasonEpisodes, getImageUrl } from '../../services/tmdb';
+import { getImageUrl, getTvShowDetails, getSeasonEpisodes } from '../../services/tmdb';
 import { useWatchlist } from '../../utils/useWatchlist';
 import { useState, useEffect } from 'react';
 
@@ -18,7 +18,7 @@ const SERVERS = [
 const SeriesDetail = () => {
   const { id } = useParams<{ id: string }>();
   const [isPlaying, setIsPlaying] = useState(false);
-  const [activeServer, setActiveServer] = useState(SERVERS[0]);
+  const [activeServer, setActiveServer] = useState(SERVERS.find(s => s.name === 'VidLink (HD)') || SERVERS[0]);
   
   const [selectedSeason, setSelectedSeason] = useState(1);
   const [selectedEpisode, setSelectedEpisode] = useState(1);

@@ -2,21 +2,21 @@ import { useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Play, Plus, ThumbsUp } from 'lucide-react';
-import { getMoviesByCategory, getImageUrl, type Movie } from '../../services/tmdb';
+import { getImageUrl, type Movie } from '../../services/tmdb';
 import { motion } from 'framer-motion';
 
-interface MovieRowProps {
+interface TvMazeRowProps {
   title: string;
-  endpoint: string;
-  mediaType?: 'movie' | 'tv';
+  category: string;
+  queryFn: () => Promise<Movie[]>;
 }
 
-const MovieRow = ({ title, endpoint, mediaType = 'movie' }: MovieRowProps) => {
+const TvMazeRow = ({ title, category, queryFn }: TvMazeRowProps) => {
   const rowRef = useRef<HTMLDivElement>(null);
   
-  const { data: movies, isLoading } = useQuery({
-    queryKey: ['media', endpoint],
-    queryFn: () => getMoviesByCategory(endpoint),
+  const { data: shows, isLoading } = useQuery({
+    queryKey: ['tvmaze', category],
+    queryFn,
   });
 
   const scroll = (direction: 'left' | 'right') => {
@@ -57,8 +57,8 @@ const MovieRow = ({ title, endpoint, mediaType = 'movie' }: MovieRowProps) => {
           className="flex gap-4 overflow-x-scroll scrollbar-hide scroll-smooth"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          {movies?.map((movie) => (
-            <MovieCard key={movie.id} movie={movie} mediaType={mediaType} />
+          {shows?.map((show) => (
+            <TvCard key={show.id} show={show} />
           ))}
         </div>
 
@@ -73,8 +73,8 @@ const MovieRow = ({ title, endpoint, mediaType = 'movie' }: MovieRowProps) => {
   );
 };
 
-const MovieCard = ({ movie, mediaType }: { movie: Movie, mediaType: 'movie' | 'tv' }) => {
-  const displayTitle = movie.title || movie.name;
+const TvCard = ({ show }: { show: Movie }) => {
+  const displayTitle = show.title || show.name;
   
   return (
     <motion.div 
@@ -82,9 +82,9 @@ const MovieCard = ({ movie, mediaType }: { movie: Movie, mediaType: 'movie' | 't
       whileHover={{ scale: 1.05 }}
       transition={{ duration: 0.2 }}
     >
-      <Link to={`/${mediaType === 'tv' ? 'series' : 'movie'}/${movie.id}`} className="absolute inset-0 z-10" />
+      <Link to={`/series/${show.id}`} className="absolute inset-0 z-10" />
       <img 
-        src={getImageUrl(movie.poster_path, 'w500')} 
+        src={getImageUrl(show.poster_path, 'w500')} 
         alt={displayTitle}
         className="w-full h-full object-cover transition-all duration-300 group-hover:opacity-50"
       />
@@ -93,7 +93,7 @@ const MovieCard = ({ movie, mediaType }: { movie: Movie, mediaType: 'movie' | 't
       <div className="absolute inset-0 flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-t from-black/90 via-black/40 to-transparent">
         <h3 className="text-white font-bold text-sm mb-2">{displayTitle}</h3>
         <div className="flex items-center gap-2 mb-2 text-xs text-green-400 font-semibold">
-          <span>{movie.vote_average?.toFixed(1) || '0.0'} Rating</span>
+          <span>{show.vote_average?.toFixed(1) || '0.0'} Rating</span>
           <span className="text-gray-300 border border-gray-600 px-1 rounded">HD</span>
         </div>
         <div className="flex gap-2">
@@ -112,4 +112,4 @@ const MovieCard = ({ movie, mediaType }: { movie: Movie, mediaType: 'movie' | 't
   );
 };
 
-export default MovieRow;
+export default TvMazeRow;
